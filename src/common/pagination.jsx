@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import _ from "lodash";
 
-// inputs?
-// events?
+// Think about inputs and outputs
 
 const Pagination = props => {
   const { itemsCount, pageSize } = props;
 
-  const pagesCount = itemsCount / pageSize;
+  const pagesCount = Math.ceil(itemsCount / pageSize);
+
+  if (pagesCount === 1) return null;
   const pages = _.range(1, pagesCount + 1);
 
   return (
