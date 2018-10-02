@@ -56,6 +56,8 @@ class Movies extends Component {
       movies: allMovies
     } = this.state;
 
+    console.log("allMovies", allMovies);
+
     const filtered =
       selectedGenre && selectedGenre._id
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
@@ -64,6 +66,10 @@ class Movies extends Component {
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies = paginate(sorted, filtered, currentPage, pageSize);
+
+    console.log("sorted", sorted);
+    console.log("filtered", filtered);
+    console.log("movies", movies);
 
     return { totalCount: filtered.length, data: movies };
   };
