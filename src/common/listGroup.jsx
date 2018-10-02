@@ -1,17 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 
 // filtering items using valueProperty and itemProperty rather than property names
 // so ListGroup can by reused by any list that may not have those property names
 // look at movies under ListGroup
-const ListGroup = props => {
-  const {
-    items,
-    textProperty,
-    valueProperty,
-    selectedItem,
-    onItemSelect
-  } = props;
-
+const ListGroup = ({
+  items,
+  textProperty,
+  valueProperty,
+  selectedItem,
+  onItemSelect
+}) => {
   return (
     <ul className="list-group">
       {items.map(item => (
