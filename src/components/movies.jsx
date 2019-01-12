@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import MoviesTable from "./moviesTable";
-import ListGroup from "../common/listGroup";
-import Pagination from "../common/pagination";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
-import { paginate } from "../utils/paginate";
-import _ from "lodash";
+import React, { Component } from 'react';
+import MoviesTable from './moviesTable';
+import ListGroup from '../common/listGroup';
+import Pagination from '../common/pagination';
+import { getMovies } from '../services/fakeMovieService';
+import { getGenres } from '../services/fakeGenreService';
+import { paginate } from '../utils/paginate';
+import _ from 'lodash';
 
 class Movies extends Component {
   state = {
@@ -13,11 +13,11 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    sortColumn: { path: "title", order: "asc" }
+    sortColumn: { path: 'title', order: 'asc' }
   };
 
   componentDidMount() {
-    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
 
     this.setState({ movies: getMovies(), genres });
   }
@@ -56,8 +56,6 @@ class Movies extends Component {
       movies: allMovies
     } = this.state;
 
-    console.log("allMovies", allMovies);
-
     const filtered =
       selectedGenre && selectedGenre._id
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
@@ -65,11 +63,8 @@ class Movies extends Component {
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-    const movies = paginate(sorted, filtered, currentPage, pageSize);
-
-    console.log("sorted", sorted);
-    console.log("filtered", filtered);
-    console.log("movies", movies);
+    // const movies = paginate(sorted, filtered, currentPage, pageSize);
+    const movies = paginate(sorted, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: movies };
   };
