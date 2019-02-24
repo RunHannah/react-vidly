@@ -19,7 +19,7 @@ export class RegisterForm extends Form {
       .label('Username'),
     password: Joi.string()
       .required()
-      .min()
+      .min(5)
       .label('Password'),
     name: Joi.string()
       .required()
