@@ -9,19 +9,23 @@ export class LoginForm extends Component {
   };
 
   schema = {
-    username: Joi.string().required(),
-    password: Joi.string().required()
+    username: Joi.string()
+      .required()
+      .label('Username'),
+    password: Joi.string()
+      .required()
+      .label('Password')
   };
 
   validate = () => {
-    const errors = {};
-    const { account } = this.state;
+    const options = { abortEarly: false };
+    const result = Joi.validate(this.state.account, this.schema, options);
 
-    if (account.username.trim() === '')
-      errors.username = 'Username is required';
-    if (account.password.trim() === '')
-      errors.password = 'Password is required';
-    return Object.keys(errors).length === 0 ? null : errors;
+    if (!result.error) return null;
+
+    const errors = {};
+    for (let item of result.error.details) errors[item.path[0]] = item.message;
+    return errors;
   };
 
   handleSubmit = e => {
@@ -37,12 +41,10 @@ export class LoginForm extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    if (name === 'username') {
-      if (value.trim() === '') return 'Username is required';
-    }
-    if (name === 'password') {
-      if (value.trim() === '') return 'Password is required';
-    }
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] };
+    const { error } = Joi.validate(obj, schema);
+    return error ? error.details[0].message : null;
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -78,7 +80,9 @@ export class LoginForm extends Component {
             onChange={this.handleChange}
             error={errors.password}
           />
-          <button className="btn btn-primary">Login</button>
+          <button disabled={this.validate()} className="btn btn-primary">
+            Login
+          </button>
         </form>
       </div>
     );
