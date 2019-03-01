@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // filtering items using valueProperty and itemProperty rather than property names
 // so ListGroup can by reused by any list that may not have those property names
@@ -17,7 +17,7 @@ const ListGroup = ({
           onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
           className={
-            item === selectedItem ? "list-group-item active" : "list-group-item"
+            item === selectedItem ? 'list-group-item active' : 'list-group-item'
           }
         >
           {item[textProperty]}
@@ -28,8 +28,8 @@ const ListGroup = ({
 };
 
 ListGroup.defaultProps = {
-  textProperty: "name",
-  valueProperty: "_id"
+  textProperty: 'name',
+  valueProperty: '_id'
 };
 
 export default ListGroup;
