@@ -24,11 +24,10 @@ export class LoginForm extends Form {
 
       // rename data object to jwt
       const { data: jwt } = await login(data.username, data.password);
-      console.log('jwt', jwt);
-
       localStorage.setItem('token', jwt);
-      // route back to home page after login
-      this.props.history.push('/');
+
+      // Full reload, route back to home page after login
+      window.location = '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
