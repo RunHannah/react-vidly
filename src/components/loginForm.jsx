@@ -1,7 +1,7 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import Form from '../common/form';
-import { login } from '../services/authService';
+import auth from '../services/authService';
 
 export class LoginForm extends Form {
   state = {
@@ -21,10 +21,7 @@ export class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-
-      // rename data object to jwt
-      const { data: jwt } = await login(data.username, data.password);
-      localStorage.setItem('token', jwt);
+      await auth.login(data.username, data.password);
 
       // Full reload, route back to home page after login
       window.location = '/';
