@@ -1,5 +1,10 @@
 import axios from 'axios';
+import logger from './logService';
+import auth from './authService';
 import { toast } from 'react-toastify';
+
+// configuring default headers for all http requests
+axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
 
 axios.interceptors.response.use(null, error => {
   const expectedError =
@@ -8,7 +13,7 @@ axios.interceptors.response.use(null, error => {
     error.response.status < 500;
 
   if (!expectedError) {
-    console.log('Logging the error', error);
+    logger.log(error);
     toast.error('An unexpected error occurred.');
   }
 
